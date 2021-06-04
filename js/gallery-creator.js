@@ -52,7 +52,8 @@ images.forEach((image) => {
 function onCloseLightbox() {
   lightbox.classList.remove("is-open");
   window.removeEventListener("keydown", onEscPress);
-  currentImg.src = "";
+  // currentImg.src = "";
+  // currentImg.alt = "";
 }
 
 closeLightboxBtn.addEventListener("click", onCloseLightbox);
