@@ -18,7 +18,11 @@ const galleryCreater = (galleryItems) => {
   });
 };
 
-document.querySelector(".gallery").append(...galleryCreater(galleryItems));
+console.log(galleryCreater(galleryItems));
+
+const gallery = document.querySelector(".gallery");
+
+gallery.append(...galleryCreater(galleryItems));
 
 const images = document.querySelectorAll(".gallery__image");
 
@@ -32,22 +36,21 @@ const currentImg = document.querySelector(".lightbox__image");
 const arrRefImg = [];
 const arrAlt = [];
 
+gallery.addEventListener("click", onClickImage);
+
 function onClickImage(event) {
+  if (!event.target.classList.contains("gallery__image")) {
+    return;
+  }
   window.addEventListener("keydown", onEscPress);
   lightbox.classList.add("is-open");
-  currentImg.src = this.dataset.source;
-  currentImg.alt = this.alt;
+  currentImg.src = event.target.dataset.source;
+  currentImg.alt = event.target.alt;
 }
 
 function onEscPress(event) {
   if (event.code === "Escape") onCloseLightbox();
 }
-
-images.forEach((image) => {
-  arrRefImg.push(image.getAttribute("data-source"));
-  arrAlt.push(image.getAttribute("alt"));
-  image.addEventListener("click", onClickImage);
-});
 
 function onCloseLightbox() {
   lightbox.classList.remove("is-open");
@@ -63,6 +66,11 @@ backdrop.addEventListener("click", onCloseLightbox);
 console.log(arrRefImg);
 
 console.log(arrAlt);
+
+images.forEach((image) => {
+  arrRefImg.push(image.getAttribute("data-source"));
+  arrAlt.push(image.getAttribute("alt"));
+});
 
 document.addEventListener("keydown", (event) => {
   let currentIndex;
